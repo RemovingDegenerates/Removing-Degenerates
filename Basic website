@@ -1,0 +1,37 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
+
+export default function GitHubClone() {
+  const [repos, setRepos] = useState([
+    { name: "my-project", description: "A cool project", stars: 10 },
+    { name: "another-repo", description: "Another repo", stars: 5 },
+  ]);
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white p-8">
+      <h1 className="text-3xl font-bold mb-4">My GitHub Clone</h1>
+      <Input placeholder="Search repositories..." className="mb-4" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {repos.map((repo, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Card className="p-4 bg-gray-800 rounded-lg">
+              <CardContent>
+                <h2 className="text-xl font-semibold">{repo.name}</h2>
+                <p className="text-gray-400">{repo.description}</p>
+                <p className="text-yellow-400 mt-2">⭐ {repo.stars}</p>
+                <Button className="mt-2">View</Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
