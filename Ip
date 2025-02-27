@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker-Themed IP Display</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding-top: 20%;
+        }
+        .glitch {
+            font-size: 2em;
+            position: relative;
+            display: inline-block;
+            animation: glitch 1s infinite;
+        }
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px #ff0000; }
+            25% { text-shadow: -2px -2px #00ff00; }
+            50% { text-shadow: 2px -2px #0000ff; }
+            75% { text-shadow: -2px 2px #ffff00; }
+            100% { text-shadow: 2px 2px #ff0000; }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="glitch" id="changingText">Fetching...</h1>
+    <p id="ip">Your IP: Loading...</p>
+
+    <script>
+        // Array of messages
+        const messages = [
+            "Your IP has been logged, get doxxed.",
+            "Tracking your location...",
+            "Too late to hide now stupid 
+        ];
+        let index = 0;
+
+        // Function to change text every 3 seconds
+        setInterval(() => {
+            document.getElementById("changingText").textContent = messages[index];
+            index = (index + 1) % messages.length; // Loop back to start
+        }, 3000);
+
+        // Fetch and display the IP address
+        fetch('https://api64.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip').innerHTML = `Your IP: <strong>${data.ip}</strong>`;
+            })
+            .catch(error => {
+                document.getElementById('ip').innerText = 'Error fetching IP';
+            });
+    </script>
+</body>
+</html>
